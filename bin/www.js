@@ -14,6 +14,7 @@ const debug = debugLib("your-project-name:server");
  */
 
 var port = normalizePort(process.env.PORT || "3000");
+console.log(port);
 app.set("port", port);
 
 /**
