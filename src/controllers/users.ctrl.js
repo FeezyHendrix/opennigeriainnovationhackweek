@@ -68,7 +68,7 @@ exports.registerUser = async (req, res) => {
           );
 
           return res.status(200).json({
-            token: token,
+            token: "JWT " + token,
             message: "Registration Successful"
           });
         } else {
@@ -111,7 +111,7 @@ exports.loginUser = (req, res) => {
             }
           );
           return res.status(200).json({
-            token: token,
+            token: "JWT " + token,
             message: "Login succesful!"
           });
         }
@@ -179,11 +179,15 @@ exports.getUserProfile = (req, res) => {
     if (err) console.error(err);
 
     if (user) {
-      const user_data = _.omit(user, [
-        "password",
-        "is_deleted",
-        "createdAt",
-        "updatedAt"
+      const user_data = _.pick(user, [
+        "phone",
+        "first_name",
+        "last_name",
+        "company_name",
+        "company_address",
+        "username",
+        "email",
+        "avatar_url"
       ]);
       return res.status(200).json({
         data: user_data
@@ -191,6 +195,24 @@ exports.getUserProfile = (req, res) => {
     } else {
       return res.status(400).json({
         message: "Invalid user id"
+      });
+    }
+  });
+};
+
+exports.deleteUser = (req, res) => {
+  const user_id = req.user._id;
+
+  usermodel.findByIdAndUpdate(user_id, { is_deleted: true }, (err, user) => {
+    if (err) console.error(err);
+
+    if (user) {
+      return res.status(200).json({
+        message: "Account Deleted"
+      });
+    } else {
+      return res.status(422).json({
+        message: "An error occured"
       });
     }
   });

@@ -23,6 +23,9 @@ app.use(passport.session());
 app.use(helmet());
 app.use(morgan("tiny"));
 
+/** Passport strategy */
+require("./src/config/passport")(passport);
+
 /** Initializing database */
 database.initializeDatabase();
 

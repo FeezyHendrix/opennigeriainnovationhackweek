@@ -45,8 +45,12 @@ const users = mongoose.Schema({
     default: null
   },
   avatar_url: {
-    type: String, 
+    type: String,
     default: null
+  },
+  is_activated: {
+    type: Boolean,
+    default: false
   },
   has_company: {
     type: Boolean,
