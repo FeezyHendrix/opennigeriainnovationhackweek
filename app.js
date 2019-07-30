@@ -32,6 +32,7 @@ database.initializeDatabase();
 /** Routes */
 const userRouter = require("./src/routes/users.route");
 const issuesRouter = require("./src/routes/issues.route");
+const proposalRouter = require("./src/routes/proposal.route");
 /** Serving Frontend public files */
 // app.use(express.static(path.join(__dirname, "../public")));
 
@@ -41,5 +42,6 @@ const issuesRouter = require("./src/routes/issues.route");
 
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/issues", issuesRouter);
+app.use("/api/v1/proposals", proposalRouter);
 
 module.exports = app;
