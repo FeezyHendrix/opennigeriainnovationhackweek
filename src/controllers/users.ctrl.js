@@ -28,7 +28,7 @@ exports.registerUser = async (req, res) => {
   const { errors, isValid } = validateRegisterInput(req.body);
 
   if (!isValid) {
-    return res.status(401).send(errors);
+    return res.status(422).send(errors);
   }
 
   usermodel.findUserByEmail(req.body.email, (err, user) => {

@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const mongoosePaginate = require("mongoose-paginate");
 
 const issues = mongoose.Schema({
   title: {
@@ -39,7 +40,8 @@ const issues = mongoose.Schema({
   fund: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "funds"
+      ref: "funds",
+      default: null
     }
   ],
   createdAt: {
@@ -51,6 +53,11 @@ const issues = mongoose.Schema({
     default: Date.now
   }
 });
+
+/**
+ * Apply mongoose paginate plugin
+ */
+issues.plugin(mongoosePaginate);
 
 const issuemodel = (module.exports = mongoose.model("issues", issues));
 
@@ -81,7 +88,7 @@ module.exports.getUserIssues = (id, callback) => {
  */
 module.exports.getIssue = (id, callback) => {
   issuemodel
-    .find({ user: id })
+    .find({ user: id, is_deleted: false })
     .populate("proposals")
     .exec(callback);
 };
