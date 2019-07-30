@@ -10,6 +10,8 @@ router.get("/check_username/:username", userController.checkUsername);
 
 router
   .use(passport.authenticate("jwt", { session: false }))
-  .patch("/user", userController.updateUser)
-  .get("/user", userController.getUserProfile);
+  .route("/user")
+  .patch(userController.updateUser)
+  .get(userController.getUserProfile)
+  .delete(userController.deleteUser);
 module.exports = router;
