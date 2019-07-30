@@ -88,7 +88,7 @@ module.exports.getUserIssues = (id, callback) => {
  */
 module.exports.getIssue = (id, callback) => {
   issuemodel
-    .find({ user: id, is_deleted: false })
+    .find({ _id: id, is_deleted: false })
     .populate("proposals")
     .exec(callback);
 };

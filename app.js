@@ -31,7 +31,7 @@ database.initializeDatabase();
 
 /** Routes */
 const userRouter = require("./src/routes/users.route");
-
+const issuesRouter = require("./src/routes/issues.route");
 /** Serving Frontend public files */
 // app.use(express.static(path.join(__dirname, "../public")));
 
@@ -40,5 +40,6 @@ const userRouter = require("./src/routes/users.route");
 // });
 
 app.use("/api/v1/users", userRouter);
+app.use("/api/v1/issues", issuesRouter);
 
 module.exports = app;

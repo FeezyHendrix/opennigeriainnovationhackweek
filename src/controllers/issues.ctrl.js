@@ -29,6 +29,7 @@ exports.createNewIssue = (req, res) => {
     tasks: req.body.tasks,
     objective: req.body.objective,
     user: req.user._id,
+    is_deleted: false,
     proposals: []
   });
 

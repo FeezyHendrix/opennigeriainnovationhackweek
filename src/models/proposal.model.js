@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const mongoosePaginate = require("mongoose-paginate");
 
 const proposals = mongoose.Schema({
   user: {
@@ -49,6 +50,8 @@ const proposals = mongoose.Schema({
   }
 });
 
+proposals.plugin(mongoosePaginate);
+
 const proposalsmodel = (module.exports = mongoose.model(
   "proposals",
   proposals
@@ -73,18 +76,22 @@ module.exports.updateProposal = (id, update, callback) => {
 /**
  * Get all user proposals
  */
-module.exports.getUserProposals = (user_id, callback) => {
-  proposalsmodel
-    .find({ user: user_id, is_deleted: false })
-    .populate("issue")
-    .exec(callback);
+module.exports.getUserProposals = (page, user_id, callback) => {
+  proposalsmodel.paginate(
+    { user: user_id, is_deleted: false },
+    { populate: "issue", limit: 20, page: page },
+    callback
+  );
 };
 
 /**
  * Get a particular proposal
  */
 module.exports.getProposalById = (id, callback) => {
-  proposalsmodel.findById(id, callback);
+  proposalsmodel
+    .findById(id)
+    .populate("issue")
+    .exec(callback);
 };
 
 /**
